@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory>
+        <Preference
+            android:key="units_length"
+            android:title="imperial"
+            android:summary="Whatever"></Preference>
+        <Preference
+            android:title="imperial"
+            android:key="units_weight"
+            android:summary="Whatever"></Preference>
+    </PreferenceCategory>
+</PreferenceScreen>
