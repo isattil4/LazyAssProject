@@ -11,5 +11,6 @@
     <string name="Hiber">Hibernate</string>
     <string name="shut">Shutdown</string>
     <string name="Title">What To Do?</string>
+    <string name="server">Server Information</string>
 
 </resources>

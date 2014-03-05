@@ -27,7 +27,7 @@ public class MainActivity extends Activity {
     private DatagramSocket socket;
     //private Context context;
     protected String action;
-
+    private static final int RESULT_SETTINGS = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,7 +116,9 @@ public class MainActivity extends Activity {
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
             case R.id.action_settings:
-                return true;
+                Intent i=new Intent(this,SettingsActivity.class);
+                startActivityForResult(i,RESULT_SETTINGS);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -194,5 +196,6 @@ public class MainActivity extends Activity {
             return rootView;
         }
     }
+
 
 }
