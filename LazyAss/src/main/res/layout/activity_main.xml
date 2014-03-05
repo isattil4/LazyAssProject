@@ -1,4 +1,4 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
@@ -6,28 +6,56 @@
     tools:context=".MainActivity"
     tools:ignore="MergeRootFrame">
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hibernate"
-        android:id="@+id/hibernate"
-        android:layout_gravity="center_horizontal|top"
-        android:src="@drawable/hibernate"
-        android:layout_alignTop="@+id/shutdown"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_marginLeft="26sp"
+        android:layout_marginRight="26sp"
+        android:text="@string/Title"
+        android:fontFamily="roboto_condensed"
+        android:textStyle="bold"
+        android:layout_marginTop="16sp"
+        android:id="@+id/textView"
+        android:layout_row="0"
+        android:layout_column="0" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="3sp"
+        android:fontFamily="roboto_condensed"
+        android:background="@android:color/darker_gray"
+        android:layout_marginLeft="26sp"
+        android:layout_marginRight="26sp"
+        android:layout_row="1"
+        android:layout_column="0"
+        />
 
     <Button
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Shutdown"
+        android:text="@string/Hiber"
+        android:id="@+id/hibernate"
+        android:layout_gravity="left|top"
+        android:layout_row="2"
+        android:layout_column="0"
+        android:layout_marginLeft="26sp"
+        android:layout_marginRight="26sp"
+        android:src="@drawable/hibernate"
+        android:fontFamily="roboto_condensed" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/shut"
         android:id="@+id/shutdown"
         android:layout_gravity="left|top"
-        android:src="@drawable/shutno"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_row="3"
+        android:layout_column="0"
+        android:layout_marginLeft="26sp"
+        android:layout_marginRight="26sp"
+        android:src="@drawable/shutno"/>
 
-</RelativeLayout>
+</GridLayout>

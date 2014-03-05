@@ -7,5 +7,9 @@
     <string name="dialog_message">Enter Server IP</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+    <string name="About">About</string>
+    <string name="Hiber">Hibernate</string>
+    <string name="shut">Shutdown</string>
+    <string name="Title">What To Do?</string>
 
 </resources>

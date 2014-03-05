@@ -2,8 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="satti.ibraheem.lazyass"
     android:versionCode="1"
-    android:versionName="1.0">
-
+    android:versionName="1.0" >
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
@@ -19,12 +18,12 @@
         android:allowBackup="true"
         android:icon="@drawable/codies"
         android:label="Lazy Assistant"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
         <activity
             android:name="satti.ibraheem.lazyass.MainActivity"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"
-            android:label="Lazy Assistant">
+            android:label="Lazy Assistant"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -32,8 +31,13 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="com.mycompany.myapp.SettingsActivity"
+            android:label="@string/title_activity_settings" >
+        </activity>
+        <activity
             android:name="satti.ibraheem.lazyass.SettingsActivity"
-            android:label="@string/title_activity_settings"></activity>
+            android:label="@string/title_activity_settings" >
+        </activity>
     </application>
 
 </manifest>

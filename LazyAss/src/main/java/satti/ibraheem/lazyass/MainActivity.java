@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
+import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -62,6 +63,8 @@ public class MainActivity extends Activity {
             builder.setMessage("Open Wifi Dialog?").setPositiveButton("Yes", dialogClickListener)
                     .setNegativeButton("No", dialogClickListener).show();
         }
+        MenuItem settings =(MenuItem) findViewById(R.id.action_settings);
+
         //Add Actions to Buttons
         Button shut = (Button) findViewById(R.id.shutdown);
         Button hiber = (Button) findViewById(R.id.hibernate);
