@@ -2,6 +2,7 @@ package satti.ibraheem.lazyass;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -16,6 +17,7 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.text.TextUtils;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -31,6 +33,8 @@ import java.util.List;
  * API Guide</a> for more information on developing a Settings UI.
  */
 public class SettingsActivity extends PreferenceActivity {
+    private static final String REGEX_IPADDRES ="\\A(25[0-5]|2[0-4]\\d|[0-1]?\\d?\\d)(\\.(25[0-5]|2[0-4]\\d|[0-1]?\\d?\\d)){3}\\z" ;
+
     /**
      * Determines whether to always show the simplified settings UI, where
      * settings are presented in a single list. When false, settings are shown
@@ -38,8 +42,24 @@ public class SettingsActivity extends PreferenceActivity {
      * shown on tablets.
      */
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
+        final SharedPreferences pref= PreferenceManager.getDefaultSharedPreferences(this);
+        boolean ip;
+        /*SharedPreferences.OnSharedPreferenceChangeListener spChanged = new
+                SharedPreferences.OnSharedPreferenceChangeListener() {
+
+                        if(!pref.getString("Server_IP", "NULL").matches(REGEX_IPADDRES)) {
+                            ip=false;
+                    }
+                    // your stuff here
+                };
+        Context context = getApplicationContext();
+        CharSequence text = "Hello toast!";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();*/
+        super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preferences);
 
     }

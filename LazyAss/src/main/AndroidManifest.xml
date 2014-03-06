@@ -31,10 +31,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.mycompany.myapp.SettingsActivity"
-            android:label="@string/title_activity_settings" >
-        </activity>
-        <activity
             android:name="satti.ibraheem.lazyass.SettingsActivity"
             android:label="@string/title_activity_settings" >
         </activity>

@@ -3,16 +3,21 @@ package satti.ibraheem.lazyass;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
 import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
+import android.support.v4.app.NotificationCompat;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,13 +25,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import java.net.DatagramSocket;
+import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends Activity {
-    private DatagramSocket socket;
-    //private Context context;
     protected String action;
+    protected String ip;
+    protected int port;
     private static final int RESULT_SETTINGS = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,8 +80,15 @@ public class MainActivity extends Activity {
             public void onClick(View view) {
                 action = "sh";
                 //try {
-                    displayNotification("shut");
-                    new Send().execute(action);
+                    Send sh=new Send();
+                    sh.execute(action);
+                try {
+                    displayNotification(sh.get());
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
                 /*} catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (ExecutionException e) {
@@ -87,8 +101,15 @@ public class MainActivity extends Activity {
             public void onClick(View view) {
                 action = "h";
                // try {
-                    displayNotification("Hiber");
-                    new Send().execute(action);
+                    Send h=new Send();
+                    h.execute(action);
+                try {
+                    displayNotification(h.get());
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
                 /*} catch (InterruptedException e) {
                     e.printStackTrace();
                 } catch (ExecutionException e) {
@@ -144,42 +165,60 @@ public class MainActivity extends Activity {
         }
         /***************************************************************/
 
-        // Creates an explicit intent for an Activity in your app
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.drawable.codies)
+                        .setContentTitle("Lazy Assistant")
+                        .setContentText(content)
+                        .setStyle(new NotificationCompat.BigTextStyle()
+                                .bigText(fullContent))
+
+                ;
+// Creates an explicit intent for an Activity in your app
         Intent resultIntent = new Intent(this, MainActivity.class);
 
-        // The stack builder object will contain an artificial back stack for the
-        // started Activity.
-        // This ensures that navigating backward from the Activity leads out of
-        // your application to the Home screen.
+// The stack builder object will contain an artificial back stack for the
+// started Activity.
+// This ensures that navigating backward from the Activity leads out of
+// your application to the Home screen.
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-        // Adds the back stack for the Intent (but not the Intent itself)
+// Adds the back stack for the Intent (but not the Intent itself)
         stackBuilder.addParentStack(MainActivity.class);
-        // Adds the Intent that starts the Activity to the top of the stack
+// Adds the Intent that starts the Activity to the top of the stack
         stackBuilder.addNextIntent(resultIntent);
         PendingIntent resultPendingIntent =
                 stackBuilder.getPendingIntent(
                         0,
                         PendingIntent.FLAG_UPDATE_CURRENT
                 );
-        /*Notification noti = new Notification.Builder()
-                .setSmallIcon(R.drawable.codies)
-                .setContentTitle("Lazy Assistant")
-                .setContentText(content)
-                .setSubText("Command Notification")
-                .setNumber(1)
-                .setStyle(new Notification.BigTextStyle()
-                        .bigText(fullContent))
-                .setPriority(1)
-                .setContentIntent(resultPendingIntent)
-                .build()
-                ;*/
-        /*mBuilder.setContentIntent(resultPendingIntent);
+        mBuilder.setContentIntent(resultPendingIntent);
         NotificationManager mNotificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        // mId allows you to update the notification later on.
-        mNotificationManager.notify(1, mBuilder.build());*/
-        /***************************************************************/
+// mId allows you to update the notification later on.
+        mNotificationManager.notify(Notification.FLAG_ONGOING_EVENT, mBuilder.build());
     }
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case RESULT_SETTINGS:
+                break;
+
+        }
+
+    }
+
+    protected String getIP()
+    {
+        SharedPreferences pref= PreferenceManager.getDefaultSharedPreferences(this);
+        return pref.getString("Server_IP", "NULL");
+    }
+    protected int getPort()
+    {
+        SharedPreferences pref= PreferenceManager.getDefaultSharedPreferences(this);
+        return Integer.parseInt(pref.getString("Server_Port","NULL"));
+    }
+
 
     /**
      * A placeholder fragment containing a simple view.

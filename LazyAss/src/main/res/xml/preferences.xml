@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory android:title="@string/server">
-        <Preference
+        <EditTextPreference
             android:key="Server_IP"
             android:title="Server IP"
-            android:summary="Enter Server IP"></Preference>
-        <Preference
+            android:summary="Enter Server IP"></EditTextPreference>
+        <EditTextPreference
             android:title="Server Port"
             android:key="Server_Port"
-            android:summary="Enter Server Port"></Preference>
+            android:summary="Enter Server Port"></EditTextPreference>
     </PreferenceCategory>
 </PreferenceScreen>
