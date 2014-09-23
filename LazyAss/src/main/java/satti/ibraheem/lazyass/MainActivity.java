@@ -7,13 +7,13 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
-import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
@@ -24,20 +24,22 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.TextView;
 
-import java.net.DatagramSocket;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends Activity {
     protected String action;
     protected String ip;
     protected int port;
+    protected SharedPreferences preferences;
     private static final int RESULT_SETTINGS = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
@@ -67,8 +69,8 @@ public class MainActivity extends Activity {
             };
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setMessage("Open Wifi Dialog?").setPositiveButton("Yes", dialogClickListener)
-                    .setNegativeButton("No", dialogClickListener).show();
+            builder.setMessage(R.string.Wifi_String).setPositiveButton(R.string.yes_btn_String, dialogClickListener)
+                    .setNegativeButton(R.string.No_btn_string, dialogClickListener).show();
         }
         MenuItem settings =(MenuItem) findViewById(R.id.action_settings);
 
@@ -139,6 +141,18 @@ public class MainActivity extends Activity {
             case R.id.action_settings:
                 Intent i=new Intent(this,SettingsActivity.class);
                 startActivityForResult(i,RESULT_SETTINGS);
+                break;
+            case R.id.about:
+                // 1. Instantiate an AlertDialog.Builder with its constructor
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+                // 2. Chain together various setter methods to set the dialog characteristics
+                builder.setMessage(R.string.about_message)
+                        .setTitle(R.string.About_title);
+                builder.setPositiveButton(R.string.ok, null);
+                // 3. Get the AlertDialog from create()
+                AlertDialog dialog = builder.create();
+                dialog.show();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -236,5 +250,47 @@ public class MainActivity extends Activity {
         }
     }
 
+    public class Send extends AsyncTask<String, Void, String> {
+        //private DatagramSocket socket;
+        //private MainActivity main=new MainActivity();
+        int port;
+        String ip;
 
+        //protected
+   /* protected Send(MainActivity local)
+    {
+        main=local;
+    }*/
+        @Override
+        protected String doInBackground(String... strings) {
+            Socket tcp;
+            try {
+                tcp = new Socket(ip, port);//("192.168.137.1",4445);
+                PrintWriter out = new PrintWriter(tcp.getOutputStream(), true);
+                out.println(strings[0]);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return "";
+            } catch (Exception e) {
+                e.printStackTrace();
+                return "failed";
+            }
+            if (strings[0].equalsIgnoreCase("sh"))
+                return "shut";
+            else
+                return "hiber";
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            port = Integer.parseInt(MainActivity.this.preferences.getString("Server_Port", "NULL"));
+            ip = MainActivity.this.preferences.getString("Server_IP", "NULL");
+            //int port= Integer.parseInt(pref.getString("Server_Port","NULL"));
+        }
+
+        protected void onPostExecute() {
+            // str=new MainActivity().action;
+        }
+    }
 }

@@ -12,5 +12,10 @@
     <string name="shut">Shutdown</string>
     <string name="Title">What To Do?</string>
     <string name="server">Server Information</string>
+    <string name="about_message">Application Created By Ibraheem Satti</string>
+    <string name="About_title">About</string>
+    <string name="Wifi_String">Open Wi-Fi Dialog?</string>
+    <string name="yes_btn_String">Yes</string>
+    <string name="No_btn_string">No</string>
 
 </resources>
